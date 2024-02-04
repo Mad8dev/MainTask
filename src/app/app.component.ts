@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Pipe } from '@angular/core';
 import { CommonModule, NgForOf } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -30,13 +30,21 @@ export class AppComponent {
     };
     this.http.get(url, { params }).subscribe((response: any) => {
       this.data = response;
-      this.totalItems = response.total;
     });
+    console.log(this.data);
   }
 
   onPageChange(page: number) {
     this.currentPage = page;
     this.getAllProduct();
-    console.log(page);
+    console.log(this.currentPage);
+  }
+
+  public sortProductsDesc() {
+    this.data.data = this.data.data.sort((a: any, b: any) => a.id - b.id);
+  }
+
+  public sortProductsAsc() {
+    this.data.data = this.data.data.sort((a: any, b: any) => b.id - a.id);
   }
 }
